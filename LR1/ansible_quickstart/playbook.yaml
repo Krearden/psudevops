@@ -1,0 +1,23 @@
+---
+- name: Install nginx and present index.html
+  hosts: localhost
+  become: true
+  become_method: su
+
+  tasks:
+  - name: install nginx
+    apt:
+      name: nginx
+      state: present
+
+  - name: copy index
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+      mode: '0644'
+    
+  - name: enable nginx
+    service:
+      name: nginx 
+      enabled: yes
+      state: started
